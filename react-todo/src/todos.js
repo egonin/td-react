@@ -18,6 +18,8 @@ export const Todos = () => {
         visible,
         setVisible,
         creationCallback,
+        setAsDone,
+        setAsTodo,
     } = useTodos();
     
     // const tasksToDisplay = [];
@@ -59,7 +61,7 @@ export const Todos = () => {
       {
             tasksToDisplay.map((task) => 
               <Grid2 item key={task.id} xs={12} sm={6} md={4}>
-                <TodoItem task = { task } removeTask={removeTask}></TodoItem>
+                <TodoItem task = { task } removeTask={removeTask} setAsDone={setAsDone} setAsTodo={setAsTodo}></TodoItem>
                 </Grid2>
             )
         }

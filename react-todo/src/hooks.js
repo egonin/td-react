@@ -56,12 +56,44 @@ export const useTaskActions = () => {
         }
       }, []);
 
-    return {createTask, deleteTask};
+      const markAsDone = useCallback(async (id) => {
+        try {
+          const response = await fetch(`${URL}${id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ done: true }),
+          });
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          alert(error);
+        }
+      }, []);
+
+      const markAsTodo = useCallback(async (id) => {
+        try {
+          const response = await fetch(`${URL}${id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ done: false }),
+          });
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          alert(error);
+        }
+      }, []);
+
+    return {createTask, deleteTask, markAsDone, markAsTodo};
 }
 
 export const useTodos = () => {
     const { tasks, isLoading, error, setTasks } =useTasks();
-    const { createTask, deleteTask } = useTaskActions();
+    const { createTask, deleteTask, markAsDone, markAsTodo } = useTaskActions();
     const [visible, setVisible] = useState(false);
     
     const tasksToDisplay = tasks;
@@ -74,6 +106,20 @@ export const useTodos = () => {
     [deleteTask, setTasks]
     )
 
+    const setAsDone = async (id) => {
+        const updatedTask = await markAsDone(id);
+        setTasks((tasks) =>
+          tasks.map((task) => (task.id === id ? updatedTask : task))
+        );
+      };
+    
+      const setAsTodo = async (id) => {
+        const updatedTask = await markAsTodo(id);
+        setTasks((tasks) =>
+          tasks.map((task) => (task.id === id ? updatedTask : task))
+        );
+      };
+
     const creationCallback = (newTask) => setTasks([newTask, ...tasks]);
 
     return {
@@ -85,6 +131,8 @@ export const useTodos = () => {
         visible,
         setVisible,
         creationCallback,
+        setAsDone,
+        setAsTodo,
     };
 
 

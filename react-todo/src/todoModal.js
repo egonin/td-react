@@ -2,6 +2,7 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
+import { Typography } from "@mui/material";
 import { useState } from "react";
 
 const styleModal = {
@@ -65,8 +66,8 @@ export const TaskCreationModal = ({
             }}
             sx={{ marginBottom: "1rem" }}
           />
-          <Button submit={false} onClick={create}>
-            Valider
+          <Button submit={false} onClick={create} sx = {{color:"#94A187", alignItems:"center"}}>
+            <Typography fontFamily={"Helvetica Neue"}>Valider</Typography>
           </Button>
         </form>
       </Paper>

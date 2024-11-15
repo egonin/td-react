@@ -13,8 +13,8 @@ export const Menu = (props) => {
             creationCallback={props.creationCallback}
             />
             </MenuItem>
-            <MenuItem>
+            {/* <MenuItem>
             <FilterAlt sx = {{color:"#94A187"}} />
-            </MenuItem>
+            </MenuItem> */}
         </MenuList>)
 }
