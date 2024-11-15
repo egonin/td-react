@@ -42,32 +42,46 @@ export const useTaskActions = () => {
         }
         return data;
     }, []);
-    return {createTask};
+
+    const deleteTask = useCallback(async (id) => {
+        try {
+          await fetch(`${URL}${id}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+        } catch (err) {
+          alert(err);
+        }
+      }, []);
+
+    return {createTask, deleteTask};
 }
 
 export const useTodos = () => {
     const { tasks, isLoading, error, setTasks } =useTasks();
-    const { createTask } = useTaskActions();
+    const { createTask, deleteTask } = useTaskActions();
     const [visible, setVisible] = useState(false);
-    const [quickFilter, setQuickFilter] = useState(false);
     
-    const tasksToDisplay = useMemo(() => {
-        if (!quickFilter) {
-          return tasks;
-        } else {
-          return tasks.filter(({ done }) => !done);
-        }
-      }, [tasks, quickFilter]);
+    const tasksToDisplay = tasks;
     
+    const removeTask = useCallback(
+    async (id) => {
+        await deleteTask(id);
+        setTasks((tasks) => tasks.filter((task) => task.id !== id));
+    },
+    [deleteTask, setTasks]
+    )
+
     const creationCallback = (newTask) => setTasks([newTask, ...tasks]);
 
     return {
         isLoading,
         error,
-        quickFilter,
-        setQuickFilter,
         tasksToDisplay,
         createTask,
+        removeTask,
         visible,
         setVisible,
         creationCallback,
