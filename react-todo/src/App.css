@@ -1,9 +1,12 @@
 .App {
   text-align: center;
+  background-color: #E9BCB7;
+  height:100%;
+  font-family: "Helvetica Neue";
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 100%;
   pointer-events: none;
 }
 
@@ -14,7 +17,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #A7C6DA;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
